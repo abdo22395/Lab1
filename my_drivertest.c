@@ -1,6 +1,4 @@
-#include <gpiod.h>
-#include <stdio.h>
-#include <unistd.h> // For usleep
+#include "my_drivertest.h"
 
 #define LED_COUNT 8 // Number of LEDs
 #define GPIO_CHIP_NUMBER 0 // Change to your GPIO chip number
@@ -74,72 +72,20 @@ int my_shift(unsigned char data, const char *data_pin, const char *clk_pin, cons
 
     return 0; // Indicate success
 }
+
+void my_counter(int delay) {
+    for (int i = 0; i <= 255; i++) {
+        my_shift(i, "16", "21", "20", false); // Shift out the current value
+        usleep(delay * 1000); // Delay for the specified time
+    }
+}
+
 void clear_all() {
-    struct gpiod_chip *chip;
-    struct gpiod_line *lines[LED_COUNT];
-    const int led_pins[LED_COUNT] = {0, 1, 2, 3, 4, 5, 6, 7}; // Change to your actual GPIO pin numbers
-
-    // Open the GPIO chip
-    chip = gpiod_chip_open_by_number(GPIO_CHIP_NUMBER);
-    if (!chip) {
-        perror("Open chip failed");
-        return;
-    }
-
-    // Request the lines for the LEDs as output
-    for (int i = 0; i < LED_COUNT; i++) {
-        lines[i] = gpiod_chip_get_line(chip, led_pins[i]);
-        if (!lines[i]) {
-            perror("Get line failed");
-            gpiod_chip_close(chip);
-            return;
-        }
-        gpiod_line_request_output(lines[i], "clear_all", 0); // Set initial value to 0
-    }
-
-    // Set all lines to low (turn off all LEDs)
-    for (int i = 0; i < LED_COUNT; i++) {
-        gpiod_line_set_value(lines[i], 0);
-    }
-
-    // Release the lines and close the chip
-    for (int i = 0; i < LED_COUNT; i++) {
-        gpiod_line_release(lines[i]);
-    }
-    gpiod_chip_close(chip);
+    unsigned char data = 0x00; // All LEDs off
+    my_shift(data, "16", "21", "20", false); // Shift out the data to clear all LEDs
 }
 
 void turn_on_all() {
-    struct gpiod_chip *chip;
-    struct gpiod_line *lines[LED_COUNT];
-    const int led_pins[LED_COUNT] = {0, 1, 2, 3, 4, 5, 6, 7}; // Change to your actual GPIO pin numbers
-
-    // Open the GPIO chip
-    chip = gpiod_chip_open_by_number(GPIO_CHIP_NUMBER);
-    if (!chip) {
-        perror("Open chip failed");
-        return;
-    }
-
-    // Request the lines for the LEDs as output
-    for (int i = 0; i < LED_COUNT; i++) {
-        lines[i] = gpiod_chip_get_line(chip, led_pins[i]);
-        if (!lines[i]) {
-            perror("Get line failed");
-            gpiod_chip_close(chip);
-            return;
-        }
-        gpiod_line_request_output(lines[i], "turn_on_all", 1); // Set initial value to 1 (on)
-    }
-
-    // Set all lines to high (turn on all LEDs)
-    for (int i = 0; i < LED_COUNT; i++) {
-        gpiod_line_set_value(lines[i], 1);
-    }
-
-    // Release the lines and close the chip
-    for (int i = 0; i < LED_COUNT; i++) {
-        gpiod_line_release(lines[i]);
-    }
-    gpiod_chip_close(chip);
+    unsigned char data = 0xFF; // All LEDs on
+    my_shift(data, "16", "21", "20", false); // Shift out the data to turn on all LEDs
 }
