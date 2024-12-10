@@ -12,7 +12,7 @@
 void set_reg_byte(unsigned char data, bool endian, bool dir)
 {
     cosnt char *data_pin = "16";
-    cosnt char *clock_pin = "21";
+    cosnt char *clk_pin = "21";
     unsigned char result = 0;
     if (endian) // Least significant bit 
      {
