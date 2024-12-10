@@ -35,7 +35,7 @@ for (int i = 0; i < 8; i++) {
     printf("Clearing all LEDs...\n");
     clear_all();
 
-    void my_counter(10);
+    void my_counter(delay);
     clear_all();
 
     return 0;
