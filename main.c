@@ -67,9 +67,9 @@ for (int i = 0; i < 8; i++) {
 
     turn_on_all();
 
-    unsigned char data_to_flip = 0b11111111;
+    unsigned char *data_to_flip = 0b11111111;
 
-    my_flip(*data_to_flip, 3);
+    my_flip(data_to_flip, 3);
 
     return 0;
 }
