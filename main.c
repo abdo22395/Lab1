@@ -31,6 +31,7 @@ for (int i = 0; i < 8; i++) {
     data <<= 1; // Shift left
 }
 */
+/*
     // Test with different data values
     printf("Testing set_reg_byte with different values:\n");
 
@@ -53,7 +54,7 @@ for (int i = 0; i < 8; i++) {
     printf("Setting register to 0x00 (All LEDs OFF):\n");
     set_reg_byte(0x00, true, true );
     usleep(2000000); // Wait for 2 seconds
-   /* 
+    
     // Clear all LEDs
     printf("Clearing all LEDs...\n");
     clear_all();
@@ -63,6 +64,12 @@ for (int i = 0; i < 8; i++) {
 
     my_counter(delay);
     clear_all();*/
+
+    turn_on_all();
+
+    unsigned char data_to_flip = 0b11111111;
+
+    my_flip(void *data, 3)
 
     return 0;
 }
