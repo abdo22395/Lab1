@@ -75,8 +75,8 @@ int my_shift(unsigned char data, const char *data_pin, const char *clk_pin, bool
 
 void my_counter(int delay) {
     for (int i = 0; i <= 255; i++) {
-        my_shift(i, "16", "21", false); // Shift out the current value
-        usleep(delay * 1000); // Delay for the specified time
+        my_shift(i, "16", "21", true); // Shift out the current value
+        usleep(delay / 1000); // Delay for the specified time
     }
 }
 
