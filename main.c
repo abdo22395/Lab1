@@ -7,6 +7,7 @@ void print_bits(unsigned char byte) {
         printf("%d", (byte >> i) & 1);
     }
     printf("\n");
+}
 
 int main() {
     // Define GPIO pin numbers
