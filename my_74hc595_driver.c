@@ -1,54 +1,48 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <unistd.h>
+#include "my_74hc595_driver.h"
 
 void set_reg_byte(unsigned char *reg, unsigned char data, bool endian, bool dir) {
-    // Om endian är true, använd little-endian, annars big-endian
+    // Set the register according to the bit arrangement in "data"
     if (endian) {
-        // Little-endian: sätt bitarna i ordning från lägsta till högsta
+        // Little-endian: set bits in order from least to most significant
         if (dir) {
-            // Sätt bitarna i normal ordning
-            *reg = data;
+            *reg = data; // Normal order
         } else {
-            // Sätt bitarna i omvänd ordning
             *reg = (data & 0x01) << 7 | (data & 0x02) << 5 | (data & 0x04) << 3 | (data & 0x08) << 1 |
-                    (data & 0x10) >> 1 | (data & 0x20) >> 3 | (data & 0x40) >> 5 | (data & 0x80) >> 7;
+                    (data & 0x10) >> 1 | (data & 0x20) >> 3 | (data & 0x40) >> 5 | (data & 0x80) >> 7; // Reverse order
         }
     } else {
-        // Big-endian: sätt bitarna i ordning från högsta till lägsta
+        // Big-endian: set bits in order from most to least significant
         if (dir) {
-            // Sätt bitarna i normal ordning
-            *reg = data;
+            *reg = data; // Normal order
         } else {
-            // Sätt bitarna i omvänd ordning
             *reg = (data & 0x80) >> 7 | (data & 0x40) >> 5 | (data & 0x20) >> 3 | (data & 0x10) >> 1 |
-                    (data & 0x08) << 1 | (data & 0x04) << 3 | (data & 0x02) << 5 | (data & 0x01) << 7;
+                    (data & 0x08) << 1 | (data & 0x04) << 3 | (data & 0x02) << 5 | (data & 0x01) << 7; // Reverse order
         }
     }
 }
 
 int step_reg_bit(int data, int ms_delay) {
-    // Kontrollera att data är en 8-bitars värde
+    // Check that data is an 8-bit value
     if (data < 0 || data > 255) {
         printf("Data must be an 8-bit value (0-255).\n");
-        return -1; // Returnera ett felvärde
+        return -1; // Return an error value
     }
 
     while (1) {
-        // Skriv ut det aktuella värdet av data
+        // Print the current value of data
         printf("%08d\n", data);
 
-        // Fördröjning i millisekunder
-        usleep(ms_delay * 1000); // usleep tar mikrosekunder
+        // Delay in milliseconds
+        usleep(ms_delay * 1000); // usleep takes microseconds
 
-        // Flytta biten ett steg åt höger
+        // Shift the bit one step to the right
         data >>= 1;
 
-        // Om data blir 0, återställ till 10000000 (1 i den mest signifikanta biten)
+        // If data becomes 0, reset to 10000000 (1 in the most significant bit)
         if (data == 0) {
-            data = 0b10000000; // Återställ till 10000000
+            data = 0b10000000; // Reset to 10000000
         }
     }
 
-    return 0; // Detta kommer aldrig att nås, men det är bra att ha
+    return 0; // This will never be reached, but it's good to have
 }
