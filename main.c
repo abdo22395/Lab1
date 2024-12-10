@@ -31,6 +31,29 @@ for (int i = 0; i < 8; i++) {
     data <<= 1; // Shift left
 }
 */
+    // Test with different data values
+    printf("Testing set_reg_byte with different values:\n");
+
+    // Test with all bits set (0xFF)
+    printf("Setting register to 0xFF (All LEDs ON):\n");
+    set_reg_byte(0xFF, true, true, data_pin, clk_pin, latch_pin);
+    usleep(2000000); // Wait for 2 seconds
+
+    // Test with alternating bits (0xAA)
+    printf("Setting register to 0xAA (Alternating ON):\n");
+    set_reg_byte(0xAA, true, true, data_pin, clk_pin, latch_pin);
+    usleep(2000000); // Wait for 2 seconds
+
+    // Test with a single bit set (0x01)
+    printf("Setting register to 0x01 (Only first LED ON):\n");
+    set_reg_byte(0x01, true, true, data_pin, clk_pin, latch_pin);
+    usleep(2000000); // Wait for 2 seconds
+
+    // Test with no bits set (0x00)
+    printf("Setting register to 0x00 (All LEDs OFF):\n");
+    set_reg_byte(0x00, true, true, data_pin, clk_pin, latch_pin);
+    usleep(2000000); // Wait for 2 seconds
+   /* 
     // Clear all LEDs
     printf("Clearing all LEDs...\n");
     clear_all();
@@ -39,7 +62,7 @@ for (int i = 0; i < 8; i++) {
     usleep(2000000);
 
     my_counter(delay);
-    clear_all();
+    clear_all();*/
 
     return 0;
 }
