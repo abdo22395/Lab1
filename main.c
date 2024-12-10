@@ -17,7 +17,7 @@ int main() {
 unsigned char data = 0b11111111; // Start with all bits set
 printf("Shifting data to the right:\n");
 for (int i = 0; i < 8; i++) {
-    my_shift(data, data_pin, clk_pin, latch_pin, false); // Shift right
+    my_shift(data, data_pin, clk_pin, latch_pin, true); // Shift right
     usleep(1000000); // Wait for 1 second
     data >>= 1; // Shift right
 }
