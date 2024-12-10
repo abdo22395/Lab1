@@ -38,7 +38,7 @@ for (int i = 0; i < 8; i++) {
     turn_on_all();
     usleep(2000000);
 
-    void my_counter(delay);
+    my_counter(delay);
     clear_all();
 
     return 0;
