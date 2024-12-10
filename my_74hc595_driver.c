@@ -44,15 +44,25 @@ my_shift(result,data_pin,clk_pin,true);
 
 int step_reg_bit(int data, int ms_delay)
 {
-    const int bits = sizeof(data) * 8;  // antal bitar i input datan 
-    unsigned char shifted_data; // håller värdet till  den shifted.
-for (int i = 0; i < bits ; i++) // går lika många varv som antal bitar 
-{
-    shifted_data = (unsigned char) (data >> i);  // skifta biten till höger av i 
+    if (data < 0 || data > 255) {
+        printf("Data must be an 8-bit value (0-255).\n");
+        return -1; // ERROR
+    }
+while (1) {
+        // printa vardet av datan
+        printf("%08d\n", data);
 
-    set_reg_byte(shifted_data,true,true); // Skickar datan till reg genom att använda big endian och framåt riktningen 
-    usleep(ms_delay * 1000);  // delay och convertera millisekunder till microsekunder. 
+        // Delay i milliseconder
+        usleep(ms_delay * 1000); // usleep tar mikrosekonder
 
-}
+        // shifta en steg at hoger
+        data >>= 1;
 
+        // om data ar 0, reseta till 10000000 (1 i den mest viktiga bitten)
+        if (data == 0) {
+            data = 0b10000000; // Reseta till 10000000
+        }
+    }
+
+    return 0;
 }
