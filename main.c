@@ -35,6 +35,9 @@ for (int i = 0; i < 8; i++) {
     printf("Clearing all LEDs...\n");
     clear_all();
 
+    turn_on_all();
+    usleep(2000000);
+
     void my_counter(delay);
     clear_all();
 
