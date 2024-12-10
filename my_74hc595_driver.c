@@ -3,6 +3,8 @@
 v#include "my_74hc595_driver.h"
 
 void set_reg_byte(unsigned char data, bool endian, bool dir) {
+     const char *data_pin = "16"; // Data pin
+     const char *clk_pin = "21"; // Clock pin
     // This function sets the register according to the bit arrangement in "data"
     unsigned char reg = 0; // Initialize the register
 
@@ -27,7 +29,7 @@ void set_reg_byte(unsigned char data, bool endian, bool dir) {
                   (data & 0x08) << 1 | (data & 0x04) << 3 | (data & 0x02) << 5 | (data & 0x01) << 7;
         }
     }
-    my
+    my_shift(reg, const char *data_pin, const char *clk_pin, true)
    
 }
 
