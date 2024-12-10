@@ -6,7 +6,7 @@ int main() {
     // Define GPIO pin numbers
     const char *data_pin = "16"; // Data pin
     const char *latch_pin = "20"; // Latch pin
-    const char *clk_pin = "21 "; // Clock pin
+    const char *clk_pin = "21"; // Clock pin
 
     // Turn on all LEDs
     printf("Turning on all LEDs...\n");
