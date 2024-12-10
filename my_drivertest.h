@@ -1,4 +1,5 @@
 // my_drivertest.h
+// Abdulmajid Alsisi / Osama Wahbi
 #ifndef MY_DRIVERTEST_H
 #define MY_DRIVERTEST_H
 
@@ -7,7 +8,6 @@
 #include <unistd.h>
 #include "my_74hc595_driver.h"
 
-// Function declarations
 int my_shift(unsigned char data, const char *data_pin, const char *clk_pin, bool dir);
 void my_counter(int delay);
 void clear_all();

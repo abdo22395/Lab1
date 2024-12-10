@@ -20,7 +20,7 @@ int main() {
     turn_on_all();
     usleep(2000000); // Wait for 2 seconds
 
-/*    // Shift a byte of data to the right
+    // Shift a byte of data to the right
 unsigned char data = 0b11111111; // Start with all bits set
 printf("Shifting data to the right:\n");
 for (int i = 0; i < 8; i++) {
@@ -37,8 +37,8 @@ for (int i = 0; i < 8; i++) {
     usleep(1000000); // Wait for 1 second
     data <<= 1; // Shift left
 }
-*/
-/*
+
+
     // Test with different data values
     printf("Testing set_reg_byte with different values:\n");
 
@@ -70,7 +70,7 @@ for (int i = 0; i < 8; i++) {
     usleep(2000000);
 
     my_counter(delay);
-    clear_all();*/
+    clear_all();
 
     turn_on_all();
 
