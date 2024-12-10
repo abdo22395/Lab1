@@ -2,6 +2,12 @@
 #include "my_8bit_lib.h"
 #include "my_drivertest.h"
 
+void print_bits(unsigned char byte) {
+    for (int i = 7; i >= 0; i--) {
+        printf("%d", (byte >> i) & 1);
+    }
+    printf("\n");
+
 int main() {
     // Define GPIO pin numbers
     const char *data_pin = "16"; // Data pin
@@ -67,9 +73,43 @@ for (int i = 0; i < 8; i++) {
 
     turn_on_all();
 
-    unsigned char *data_to_flip = 0b11111111;
+// Initialize a byte (8 bits)
+    unsigned char data = 0b00000000; // Start with all bits OFF
+    printf("Initial data: ");
+    print_bits(data);
 
-    my_flip(*data_to_flip, 3);
+    // Flip the 0th bit (least significant bit)
+    my_flip(&data, 0);
+    printf("After flipping bit 0: ");
+    print_bits(data);
+
+    // Flip the 1st bit
+    my_flip(&data, 1);
+    printf("After flipping bit 1: ");
+    print_bits(data);
+
+    // Flip the 2nd bit
+    my_flip(&data, 2);
+    printf("After flipping bit 2: ");
+    print_bits(data);
+
+    // Flip the 7th bit (most significant bit)
+    my_flip(&data, 7);
+    printf("After flipping bit 7: ");
+    print_bits(data);
+
+    // Flip the 0th bit again to reset it
+    my_flip(&data, 0);
+    printf("After flipping bit 0 again: ");
+    print_bits(data);
+
+    // Flip all bits in a byte
+    unsigned char data2 = 0b00000000; // Reset data2
+    for (int i = 0; i < 8; i++) {
+        my_flip(&data2, i);
+    }
+    printf("After flipping all bits: ");
+    print_bits(data2);
 
     return 0;
 }
