@@ -1,11 +1,9 @@
-// my_8bit_lib.h
-// Abdulmajid Alsisi / Osama Wahbi
-
 #ifndef MY_8BIT_LIB_H
 #define MY_8BIT_LIB_H
 
-#include <stdio.h>
+#include <stdint.h>
 
-void my_flip(void *data, int bit);
+// Funktion för att flippa en specifik bit i en bitsträng av okänd storlek
+void my_flip(uint8_t *data, int bit);
 
 #endif // MY_8BIT_LIB_H

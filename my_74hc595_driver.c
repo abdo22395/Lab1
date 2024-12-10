@@ -1,62 +1,58 @@
-// my_74hc595_driver.h
-// Abdulmajid Alsisi / Osama Wahbi
-#include "my_74hc595_driver.h"
+
+
+#include <stdbool.h>
+#include <stdint.h>
+#include <unistd.h>
 #include "my_8bit_lib.h"
+#include "my_74hc595_driver.h"
 
-
-void set_reg_byte(unsigned char data, bool endian, bool dir) {
-     const char *data_PinAB = "16"; // Data pin
-     const char *clk_PinAB = "21"; // Clock pin
-    // satter registret enligt bittarna
-    unsigned char reg = 0; // int reg
-
-    if (endian) {
-        // Little-endian: satta bittarna fran minst viktigt to mest viktig
-        if (dir) {
-            // Normal order
-            reg = data; // ass datan till registret
-        } else {
-            // bakat order
-            reg = (data & 0x01) << 7 | (data & 0x02) << 5 | (data & 0x04) << 3 | (data & 0x08) << 1 |
-                  (data & 0x10) >> 1 | (data & 0x20) >> 3 | (data & 0x40) >> 5 | (data & 0x80) >> 7;
+ // data är byten som ska skickas till registret 
+ // endian är byteordning true för little endian(LSB) och false för big (MSB)
+// dir är variablen för riktning där true är höger och false är vänster
+void set_reg_byte(unsigned char data, bool endian, bool dir)
+{
+    cosnt char *data_pin = "16";
+    cosnt char *clock_pin = "21";
+    unsigned char result = 0;
+    if (endian) // Least significant bit 
+     {
+        for (int i = 0; i < 8 ; i++) { // går igenom alla bitar i byten
+        if (dir)  // om riktningen är höger 
+        {
+            result |= ((data >> i )& 1) << i; // då flytta varje bit i data till rätt plats i resultat
         }
-    } else {
-        // Big-endian: motsatsen till little endian
-        if (dir) {
-            // Normal order
-            reg = data; // ass data to registret
-        } else {
-            // bakat order
-            reg = (data & 0x80) >> 7 | (data & 0x40) >> 5 | (data & 0x20) >> 3 | (data & 0x10) >> 1 |
-                  (data & 0x08) << 1 | (data & 0x04) << 3 | (data & 0x02) << 5 | (data & 0x01) << 7;
+        else // om det är vänster
+        {
+            result |= ((data << i) & 0x80) >> i; //flytta allt til rätt plats åt vänster
         }
-    }
-    my_shift(reg, data_PinAB, clk_PinAB, true);
-   
+     }
+ }
+else // MOST SIGNIFICANT BIT 
+{ // om big-endian valt byten justeras beroende på riktning 
+    if (dir) // 
+{
+result = data >> 1; // flyttrar alla bitar ett steg höger
+}
+else 
+{
+result << 1; // annars flytta allt till vänster 
+}
+my_shift(result,data_pin,clk_pin,true); 
+
+}
 }
 
-int step_reg_bit(int data, int ms_delay) {
-    // kollar om datan ar 8 bitar varde
-    if (data < 0 || data > 255) {
-        printf("Data must be an 8-bit value (0-255).\n");
-        return -1; // ERROR
-    }
+void step_reg_bit(int data, int ms_delay)
+{
+    const int bits = sizeof(data) * 8;  // antal bitar i input datan 
+    unsigned char shifted_data; // håller värdet till  den shifted.
+for (int i = 0; i < bits ; i++) // går lika många varv som antal bitar 
+{
+    shifted_data = (unsigned char) (data >> i);  // skifta biten till höger av i 
 
-    while (1) {
-        // printa vardet av datan
-        printf("%08d\n", data);
+    set_reg_byte(shifted_data,true,true); // Skickar datan till reg genom att använda big endian och framåt riktningen 
+    usleep(ms_delay * 1000);  // delay och convertera millisekunder till microsekunder. 
 
-        // Delay i milliseconder
-        usleep(ms_delay * 1000); // usleep tar mikrosekonder
+}
 
-        // shifta en steg at hoger
-        data >>= 1;
-
-        // om data ar 0, reseta till 10000000 (1 i den mest viktiga bitten)
-        if (data == 0) {
-            data = 0b10000000; // Reseta till 10000000
-        }
-    }
-
-    return 0;
 }
