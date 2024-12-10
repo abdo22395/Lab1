@@ -9,46 +9,45 @@
  // data är byten som ska skickas till registret 
  // endian är byteordning true för little endian(LSB) och false för big (MSB)
 // dir är variablen för riktning där true är höger och false är vänster
-void set_reg_byte(unsigned char data, bool endian, bool dir)
-{
-    const char *data_pin = "16";
-    const char *clk_pin = "21";
-    unsigned char result = 0;
-    if (endian) // Least significant bit 
-     {
-        for (int i = 0; i < 8 ; i++) { // går igenom alla bitar i byten
-        if (dir)  // om riktningen är höger 
-        {
-            result |= ((data >> i )& 1) << i; // då flytta varje bit i data till rätt plats i resultat
-        }
-        else // om det är vänster
-        {
-            result |= ((data << i) & 0x80) >> i; //flytta allt til rätt plats åt vänster
-        }
-     }
- }
-else // MOST SIGNIFICANT BIT 
-{ // om big-endian valt byten justeras beroende på riktning 
-    if (dir) // 
-{
-result = data >> 1; // flyttrar alla bitar ett steg höger
-}
-else 
-{
-result << 1; // annars flytta allt till vänster 
-}
-my_shift(result,data_pin,clk_pin,true); 
+void set_reg_byte(unsigned char data, bool endian, bool dir) {
+     const char *data_PinAB = "16"; // Data pin
+     const char *clk_PinAB = "21"; // Clock pin
+    // satter registret enligt bittarna
+    unsigned char reg = 0; // int reg
 
-}
+    if (endian) {
+        // Little-endian: satta bittarna fran minst viktigt to mest viktig
+        if (dir) {
+            // Normal order
+            reg = data; // ass datan till registret
+        } else {
+            // bakat order
+            reg = (data & 0x01) << 7 | (data & 0x02) << 5 | (data & 0x04) << 3 | (data & 0x08) << 1 |
+                  (data & 0x10) >> 1 | (data & 0x20) >> 3 | (data & 0x40) >> 5 | (data & 0x80) >> 7;
+        }
+    } else {
+        // Big-endian: motsatsen till little endian
+        if (dir) {
+            // Normal order
+            reg = data; // ass data to registret
+        } else {
+            // bakat order
+            reg = (data & 0x80) >> 7 | (data & 0x40) >> 5 | (data & 0x20) >> 3 | (data & 0x10) >> 1 |
+                  (data & 0x08) << 1 | (data & 0x04) << 3 | (data & 0x02) << 5 | (data & 0x01) << 7;
+        }
+    }
+    my_shift(reg, data_PinAB, clk_PinAB, true);
+   
 }
 
-int step_reg_bit(int data, int ms_delay)
-{
+int step_reg_bit(int data, int ms_delay) {
+    // kollar om datan ar 8 bitar varde
     if (data < 0 || data > 255) {
         printf("Data must be an 8-bit value (0-255).\n");
         return -1; // ERROR
     }
-while (1) {
+
+    while (1) {
         // printa vardet av datan
         printf("%08d\n", data);
 
