@@ -75,7 +75,6 @@ for (int i = 0; i < 8; i++) {
     turn_on_all();
 
 // Initialize a byte (8 bits)
-    unsigned char data = 0b00000000; // Start with all bits OFF
     printf("Initial data: ");
     print_bits(data);
 
