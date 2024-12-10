@@ -5,7 +5,6 @@
 int main() {
     // Define GPIO pin numbers
     const char *data_pin = "16"; // Data pin
-    const char *latch_pin = "20"; // Latch pin
     const char *clk_pin = "21"; // Clock pin
 
     // Turn on all LEDs
@@ -17,7 +16,7 @@ int main() {
 unsigned char data = 0b11111111; // Start with all bits set
 printf("Shifting data to the right:\n");
 for (int i = 0; i < 8; i++) {
-    my_shift(data, data_pin, clk_pin, latch_pin, true); // Shift right
+    my_shift(data, data_pin, clk_pin, true); // Shift right
     usleep(1000000); // Wait for 1 second
     data >>= 1; // Shift right
 }
@@ -26,7 +25,7 @@ for (int i = 0; i < 8; i++) {
 data = 0b00000001; // Start with the least significant bit set
 printf("Shifting data to the left:\n");
 for (int i = 0; i < 8; i++) {
-    my_shift(data, data_pin, clk_pin, latch_pin, true); // Shift left
+    my_shift(data, data_pin, clk_pin, true); // Shift left
     usleep(1000000); // Wait for 1 second
     data <<= 1; // Shift left
 }
