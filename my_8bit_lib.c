@@ -1,11 +1,11 @@
-#include <stdio.h>
+#include "my_8bit_lib.h"
 
 void my_flip(void *data, int bit) {
-    // Beräkna vilken byte och vilken bit inom den byten som ska flipas
+    // Calculate which byte and which bit within that byte to flip
     unsigned char *bytePtr = (unsigned char *)data;
-    int byteIndex = bit / 8; // Hela byten
-    int bitIndex = bit % 8;   // Specifik bit inom byten
+    int byteIndex = bit / 8; // Whole bytes
+    int bitIndex = bit % 8;   // Specific bit within the byte
 
-    // Flippar biten genom att använda XOR med en mask
+    // Flip the bit using XOR with a mask
     bytePtr[byteIndex] ^= (1 << bitIndex);
 }
