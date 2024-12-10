@@ -11,8 +11,8 @@
 // dir är variablen för riktning där true är höger och false är vänster
 void set_reg_byte(unsigned char data, bool endian, bool dir)
 {
-    cosnt char *data_pin = "16";
-    cosnt char *clk_pin = "21";
+    const char *data_pin = "16";
+    const char *clk_pin = "21";
     unsigned char result = 0;
     if (endian) // Least significant bit 
      {
