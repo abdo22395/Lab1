@@ -75,17 +75,17 @@ int my_shift(unsigned char data, const char *data_pin, const char *clk_pin, bool
 
 void my_counter(int delay) {
     for (int i = 0; i <= 255; i++) {
-        my_shift(i, "16", "21", "20", false); // Shift out the current value
+        my_shift(i, "16", "21", false); // Shift out the current value
         usleep(delay * 1000); // Delay for the specified time
     }
 }
 
 void clear_all() {
     unsigned char data = 0x00; // All LEDs off
-    my_shift(data, "16", "21", "20", false); // Shift out the data to clear all LEDs
+    my_shift(data, "16", "21", false); // Shift out the data to clear all LEDs
 }
 
 void turn_on_all() {
     unsigned char data = 0xFF; // All LEDs on
-    my_shift(data, "16", "21", "20", false); // Shift out the data to turn on all LEDs
+    my_shift(data, "16", "21", false); // Shift out the data to turn on all LEDs
 }
