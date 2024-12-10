@@ -29,7 +29,7 @@ void set_reg_byte(unsigned char data, bool endian, bool dir) {
                   (data & 0x08) << 1 | (data & 0x04) << 3 | (data & 0x02) << 5 | (data & 0x01) << 7;
         }
     }
-    my_shift(reg, const char *data_pin, const char *clk_pin, true)
+    my_shift(reg, data_pin, clk_pin, true);
    
 }
 
