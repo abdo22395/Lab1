@@ -13,7 +13,7 @@ int main() {
     turn_on_all();
     usleep(2000000); // Wait for 2 seconds
 
-    // Shift a byte of data to the right
+/*    // Shift a byte of data to the right
 unsigned char data = 0b11111111; // Start with all bits set
 printf("Shifting data to the right:\n");
 for (int i = 0; i < 8; i++) {
@@ -30,7 +30,7 @@ for (int i = 0; i < 8; i++) {
     usleep(1000000); // Wait for 1 second
     data <<= 1; // Shift left
 }
-
+*/
     // Clear all LEDs
     printf("Clearing all LEDs...\n");
     clear_all();
