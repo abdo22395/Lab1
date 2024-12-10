@@ -3,7 +3,7 @@
 #define LED_COUNT 8 // Number of LEDs
 #define GPIO_CHIP_NUMBER 0 // Change to your GPIO chip number
 
-int my_shift(unsigned char data, const char *data_pin, const char *clk_pin, const char *latch_pin, bool dir) {
+int my_shift(unsigned char data, const char *data_pin, const char *clk_pin, bool dir) {
     struct gpiod_chip *chip;
     struct gpiod_line *data_line;
     struct gpiod_line *clk_line;
@@ -19,7 +19,7 @@ int my_shift(unsigned char data, const char *data_pin, const char *clk_pin, cons
     // Get the lines for data, clock, and latch pins
     data_line = gpiod_chip_get_line(chip, atoi(data_pin));
     clk_line = gpiod_chip_get_line(chip, atoi(clk_pin));
-    latch_line = gpiod_chip_get_line(chip, atoi(latch_pin));
+    latch_line = gpiod_chip_get_line(chip, 20);
     if (!data_line || !clk_line || !latch_line) {
         perror("Get line failed");
         gpiod_chip_close(chip);
