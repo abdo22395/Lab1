@@ -42,7 +42,7 @@ my_shift(result,data_pin,clk_pin,true);
 }
 }
 
-void step_reg_bit(int data, int ms_delay)
+int step_reg_bit(int data, int ms_delay)
 {
     const int bits = sizeof(data) * 8;  // antal bitar i input datan 
     unsigned char shifted_data; // håller värdet till  den shifted.
