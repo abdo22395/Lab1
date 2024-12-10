@@ -5,9 +5,11 @@
 #include <gpiod.h>
 #include <stdio.h>
 #include <unistd.h>
+#include "my_74hc595_driver.h"
 
 // Function declarations
 int my_shift(unsigned char data, const char *data_pin, const char *clk_pin, const char *latch_pin, bool dir);
+void my_counter(int delay);
 void clear_all();
 void turn_on_all();
 
