@@ -1,14 +1,9 @@
-
-
-#include <stdbool.h>
-#include <stdint.h>
-#include <unistd.h>
-#include "my_8bit_lib.h"
+// my_74hc595_driver.h
+// Abdulmajid Alsisi / Osama Wahbi
 #include "my_74hc595_driver.h"
+#include "my_8bit_lib.h"
 
- // data är byten som ska skickas till registret 
- // endian är byteordning true för little endian(LSB) och false för big (MSB)
-// dir är variablen för riktning där true är höger och false är vänster
+
 void set_reg_byte(unsigned char data, bool endian, bool dir) {
      const char *data_PinAB = "16"; // Data pin
      const char *clk_PinAB = "21"; // Clock pin
