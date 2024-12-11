@@ -19,8 +19,8 @@ int my_shift(unsigned char data, const char *data_pin, const char *clk_pin, bool
     }
 
     // fa linjarna till data, clk och latch pinnen(den ar hardkodad pga funktionens anrop begransningar)
-    data_line = gpiod_chip_get_line(chip, atoi(data_pin));
-    clk_line = gpiod_chip_get_line(chip, atoi(clk_pin));
+    data_line = gpiod_chip_get_line(chip, data_pin);
+    clk_line = gpiod_chip_get_line(chip, clk_pin);
     latch_line = gpiod_chip_get_line(chip, 20);
     if (!data_line || !clk_line || !latch_line) {
         // om error
