@@ -45,6 +45,7 @@ int step_reg_bit(int data, int ms_delay) {
     while (1) {
         // printa vardet av datan
         printf("%08d\n", data);
+         my_shift(data, 16, 21, true);
 
         // Delay i milliseconder
         usleep(ms_delay * 1000); // usleep tar mikrosekonder
