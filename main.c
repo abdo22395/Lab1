@@ -5,9 +5,9 @@
 #include "./src/my_drivertest.h"
 
 //const char *gpiochip = "gpiochip0";
-unsigned int data_pin = 17;
-unsigned int latch_pin = 27;
-unsigned int clk_pin = 22;
+unsigned int data_pin = 16;
+unsigned int latch_pin = 20;
+unsigned int clk_pin = 21;
 
 
 
